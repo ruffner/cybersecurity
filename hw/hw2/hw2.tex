@@ -36,14 +36,28 @@ To decrypt the input file, \texttt{AES-ciphertext.bin}, JCryptTool was used, wit
 
 
 \section{}
-The unmodified image is shown in Fig. \ref{fig:apple}.
+The unmodified image is shown in Fig. \ref{fig:apple}. The image encrypted with AES in ECB mode is shown in Fig. \ref{fig:appleecb}. The image encoded with AES in CBC mode is shown in Fig. \ref{fig:applecbc}.
 
 \begin{figure}
     \centering
-    \includegraphics[width=4cm]{apple}
-    \caption{\texttt{apple.bmp}}
-    \label{fig:apple}
+    \begin{minipage}{4cm}
+        \includegraphics[width=4cm]{apple.png}
+        \caption{\texttt{apple.bmp}}
+        \label{fig:apple}
+    \end{minipage}
+    \begin{minipage}{4cm}
+            \includegraphics[width=4cm]{apple.png}
+            \caption{\texttt{appleecb.bmp}}
+            \label{fig:appleecb}
+    \end{minipage}
+    \begin{minipage}{4cm}
+            \includegraphics[width=4cm]{apple.png}
+            \caption{\texttt{applecbc.bmp}}
+            \label{fig:applecbc}
+    \end{minipage}
+    \hfill
 \end{figure}
+
 
 
 \end{document}
