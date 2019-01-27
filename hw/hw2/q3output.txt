@@ -1,0 +1,21 @@
+Moral Responsibility for Computing Artifacts: Five Rules, Version 27 
+
+Rule 1: The people who design, develop, or deploy a computing artifact are morally responsible for that artifact,
+and for the foreseeable effects of that artifact. This responsibility is shared with other people who design, develop,
+deploy or knowingly use the artifact as part of a sociotechnical system.
+
+Rule 2: The shared responsibility of computing artifacts is not a zero-sum game. The responsibility of an individual
+is not reduced simply because more people become involved in designing, developing, deploying or using the
+artifact. Instead, a person’s responsibility includes being answerable for the behaviors of the artifact and for the
+artifact’s effects after deployment, to the degree to which these effects are reasonably foreseeable by that person. 
+
+Rule 3: People who knowingly use a particular computing artifact are morally responsible for that use. 
+
+Rule 4: People who knowingly design, develop, deploy, or use a computing artifact can do so responsibly only when
+they make a reasonable effort to take into account the sociotechnical systems in which the artifact is embedded. 
+
+Rule 5: People who design, develop, deploy, promote, or evaluate a computing artifact should not explicitly or
+implicitly deceive users about the artifact or its foreseeable effects, or about the sociotechnical systems in which the
+artifact is embedded. 
+
+
