@@ -33,31 +33,114 @@ For this problem. The sample text included in \texttt{q2input.txt} was used. Thi
 To decrypt the input file, \texttt{AES-ciphertext.bin}, JCryptTool was used, with no padding in Electronic CodeBlock mode. The result of the decryption is included in \texttt{q3output.txt}.
 
 \section{}
+The following tables depict the state bytes through one  round of the AES encryption process. The final \textit{MixColumns} step was calculated using the attached \texttt{mxmult.py} program.
+\begin{table}[h!]
+    \centering
+    \parbox{5cm}{
+        \centering
+        \begin{tabular}{cccc}
+            00 & 01 & 02 & 03 \\
+            04 & 05 & 06 & 07 \\
+            08 & 09 & 0A & 0A \\
+            0C & 0D & 0E & 0F \\
+        \end{tabular}
+        \caption{Original Contents}
+        \label{tab:mes1}
+    }
+    \parbox{5cm}{
+        \centering
+        \begin{tabular}{cccc}
+            01 & 00 & 03 & 02 \\
+            05 & 04 & 07 & 06 \\
+            09 & 08 & 0B & 0B \\
+            0D & 0C & 0F & 0E \\
+        \end{tabular}
+        \caption{After AddRoundKey}
+        \label{tab:mes2}
+    }
+    \parbox{5cm}{
+        \centering
+        \begin{tabular}{cccc}
+            7C & 63 & 7B & 77 \\
+            6B & F2 & C5 & 6F \\
+            01 & 30 & 2B & 2B \\
+            D7 & FE & 76 & AB \\
+        \end{tabular}
+        \caption{After SubBytes}
+        \label{tab:mes3}
+    }
+\end{table}
+
+
+\begin{table}[h!]
+    \centering
+    \parbox{5cm}{
+        \begin{tabular}{cccc}
+            7C & 6B & 01 & D7 \\
+            F2 & 30 & FE & 63 \\
+            2B & 76 & 7B & C5 \\
+            AB & 77 & 6F & 2B \\
+        \end{tabular}
+        \caption{After ShiftRows}
+        \label{tab:mes4}
+    }
+    \parbox{5cm}{
+        \centering
+        \begin{tabular}{cccc}
+            AE & 47 & EC & 69 \\
+            B2 & 1E & E3 & 75 \\
+            D9 & D2 & 44 & BF \\
+            FB & E9 & 58 & 75 \\
+        \end{tabular}
+        \caption{After MixColumns}
+        \label{tab:mes5}
+    }
+\end{table}
+
+
 
 
 \section{}
 The unmodified image is shown in Fig. \ref{fig:apple}. The image encrypted with AES in ECB mode is shown in Fig. \ref{fig:appleecb}. The image encoded with AES in CBC mode is shown in Fig. \ref{fig:applecbc}.
 
-\begin{figure}
+\begin{figure}[h!]
     \centering
-    \begin{minipage}{4cm}
-        \includegraphics[width=4cm]{apple.png}
+    \begin{minipage}{5cm}
+        \includegraphics[width=5cm]{apple.png}
         \caption{\texttt{apple.bmp}}
         \label{fig:apple}
     \end{minipage}
-    \begin{minipage}{4cm}
-            \includegraphics[width=4cm]{apple.png}
-            \caption{\texttt{appleecb.bmp}}
-            \label{fig:appleecb}
+    \hspace{0.7cm}
+    \begin{minipage}{5cm}
+        \includegraphics[width=5cm]{appleecb.png}
+        \caption{\texttt{appleecb.bmp}}
+        \label{fig:appleecb}
     \end{minipage}
-    \begin{minipage}{4cm}
-            \includegraphics[width=4cm]{apple.png}
-            \caption{\texttt{applecbc.bmp}}
-            \label{fig:applecbc}
+    \hspace{0.7cm}
+    \begin{minipage}{5cm}
+        \includegraphics[width=5cm]{applecbc.png}
+        \caption{\texttt{applecbc.bmp}}
+        \label{fig:applecbc}
     \end{minipage}
     \hfill
 \end{figure}
 
+
+\section{}
+\paragraph{1}
+  We know the random vector, \textit{v}, since it is always the first 80 bits. With the addition of this  information, all of $v$, $c$, and $k$ are known. Thus, the the message can be decrypted by computing RC4$(v||k) \oplus c$.
+
+\paragraph{2}
+  By observing the random vector $v$ across transmissions. The same $v$ implies the same key stream was used to encrypt the messages.
+
+\paragraph{3}
+  The key stream varies with random 80 bit $v$ since the key is fixed. Brute-force collision search is $O(2^{n/2})$, where $n$ is the number of bits. Thus, after $2^40$ transmissions the random $v$ will probably be repeated.
+
+\paragraph{4} 
+  This implies that the key should be changed before $2^{40}$ transmissions have occured.
+
+\section*{Acknowledgements}
+This homework was completed in collaboration with Jordan Caudill.
 
 
 \end{document}
