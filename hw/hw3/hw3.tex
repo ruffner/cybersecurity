@@ -11,12 +11,13 @@
 %% Useful packages
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{seqsplit}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 
 
 \title{EE576 HW 3}
-\author{Matt Ruffner}
+\author{Jordan Caudill, Matt Ruffner}
 
 \begin{document}
 \maketitle
@@ -24,7 +25,295 @@
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \section{}
+\paragraph{a.}
+  There should be approximately 255 other 21-bytes files that have the same SHA-1 hash. 
+\paragraph{b.}
+  The SHA-1 hash of the string "University of Kentucky" is \texttt{7b35ac7c15a9d173ef3b100d32ea4ec4d822fd12}
+
+\paragraph{c.} 
+  Assuming an average of 0.5 million files on a standard Linux machine (\texttt{find / | wc -l} yielded 455826 for me), the probability of a SHA-1 hash collision is very low (less than $10^{-20}$), as calculated with Eq. \ref{eq:sha1}, where n is the number of blocks (22 in this case), and b is the number of bits produced by the hash function (160 for SHA-1).
+  \begin{equation}
+      p \leq \frac{n(n-1)}{2} \times \frac{1}{2^b}
+      \label{eq:sha1}
+  \end{equation}
 
 
+\section{}
+\paragraph{a.}
+  We are given that p = 3, q = 11, e = 7, M = 5, where p and q are primes, e is the public key, and M is the message.
+\\
+\\
+  To calculate n, we do the following:\\
+  \\
+  $n = p \times q$ \\
+  $n = 3 \times 11$ \\
+  $n = 33$
+  \\
+  \\
+  We find the totient with the following: \\
+  \\
+  $\Phi (n) = (p-1) \times (q - 1)$ \\
+  $\Phi (n) = 2 \times 10$ \\
+  $\Phi (n) = 20$ \\
+  \\
+  Next we calculate d in the following way: \\
+  \\
+  $e \times d \equiv 1 \bmod \Phi (n)$ \\
+  $7 \times d \equiv 1 \bmod 20$ \\
+  \\
+  We next need to calculate the private key called d. To find d, we use the Extended Euclidean Algorithm like so:
+  \\
+  \\
+  $20 = 7 \times 2 + 6$\\
+  $7 = 6 \times 1 + 1$ \\
+  \\
+  We then work backwards to find the value for d:
+  \\
+  \\
+  $1 = 7 - 6$ \\
+  $6 = 20 - 7 \times 2$ \\
+  Plug the equation for 6 into the equation for 1 and get the following: \\
+  \\
+  $1 = 7 - (20 - 7) \times 2$\\
+  $1 = 3 \times 7 - 20$ \\
+  \\
+  Looking at this equation, we can see that to make the first equation true, the value of d must be 3.
+  \\
+  \\
+  We then move on to encrypting the message. To do this, we use the following equation: \\
+  \\
+  $c = M^{e} \bmod n$ \\
+  $c = 5^{7} \bmod 33$ \\
+  $c = 14$ \\
+  \\
+  This gives us the encrypted message that will be sent. To decrypt the message, we use the following: \\
+  \\
+  $M = c^{d} \bmod n$ \\
+  $M = 14^{3} \bmod 33$ \\
+  $M = 5$ \\
+  \\
+  This will give us the original message.
+ \paragraph{b.}
+  We are give p = 5, q = 11, e = 3, M = 9. \\
+  \\
+    $n = p \times q$ \\
+  $n = 5 \times 11$ \\
+  $n = 55$ \\
+  \\
+    $\Phi (n) = (p-1) \times (q - 1)$ \\
+  $\Phi (n) = 4 \times 10$ \\
+  $\Phi (n) = 40$ \\
+  \\
+    $e \times d \equiv 1 \bmod \Phi (n)$ \\
+  $3 \times d \equiv 1 \bmod 40$ \\
+  \\
+  $40 = 3 \times 13 +1$
+  \\
+  $1 = 40 - 3 \times 13$ \\ 
+  Therefore, $d = 40 - 13 = 27$\\
+  \\
+    $c = M^{e} \bmod n$ \\
+  $c = 9^{3} \bmod 55$ \\
+  $c = 14$ \\
+  \\
+    $M = c^{d} \bmod n$ \\
+  $M = 14^{27} \bmod 55$ \\
+  $M = 9$ \\
+  \\
+\paragraph{c.}
+   We are give p = 7, q = 11, e = 17, M = 8. \\
+  \\
+    $n = p \times q$ \\
+  $n = 7 \times 11$ \\
+  $n = 77$ \\
+  \\
+    $\Phi (n) = (p-1) \times (q - 1)$ \\
+  $\Phi (n) = 6 \times 10$ \\
+  $\Phi (n) = 60$ \\
+  \\
+    $e \times d \equiv 1 \bmod \Phi (n)$ \\
+  $17 \times d \equiv 1 \bmod 60$ \\
+  \\
+  $60 = 17 \times 3 +9$ \\
+  $17 = 9 \times 1 + 8$ \\
+  $9 = 8 \times 1 + 1$ \\
+  \\
+  $1 = 9 - 8$ \\
+  $1 = 60 - 17 \times 3 - (17 - (60 - 17 \times 3))$ \\
+  $1 = 60 \times 2 - 17 \times 7$ \\
+  \\
+  Therefore, $d = 60 - 7 = 53$\\
+  \\
+    $c = M^{e} \bmod n$ \\
+  $c = 8^{17} \bmod 77$ \\
+  $c = 57$ \\
+  \\
+    $M = c^{d} \bmod n$ \\
+  $M = 57^{53} \bmod 77$ \\
+  $M = 8$ \\
+  \\
+\paragraph{d.}
+   We are give p = 11, q = 13, e = 11, M = 7. \\
+  \\
+    $n = p \times q$ \\
+  $n = 11 \times 13$ \\
+  $n = 143$ \\
+  \\
+    $\Phi (n) = (p-1) \times (q - 1)$ \\
+  $\Phi (n) = 10 \times 12$ \\
+  $\Phi (n) = 120$ \\
+  \\
+    $e \times d \equiv 1 \bmod \Phi (n)$ \\
+  $11 \times d \equiv 1 \bmod 120$ \\
+  \\
+  $d = 11$ \\
+  \\
+    $c = M^{e} \bmod n$ \\
+  $c = 7^{11} \bmod 143$ \\
+  $c = 106$ \\
+  \\
+    $M = c^{d} \bmod n$ \\
+  $M = 106^{11} \bmod 143$ \\
+  $M = 7$ \\
+  \\
+  \paragraph{e.}
+   We are give p = 17, q = 31, e = 7, M = 2. \\
+  \\
+    $n = p \times q$ \\
+  $n = 17 \times 31$ \\
+  $n = 527$ \\
+  \\
+    $\Phi (n) = (p-1) \times (q - 1)$ \\
+  $\Phi (n) = 16 \times 30$ \\
+  $\Phi (n) = 480$ \\
+  \\
+    $e \times d \equiv 1 \bmod \Phi (n)$ \\
+  $7 \times d \equiv 1 \bmod 480$ \\
+\\
+  $d = 343$\\
+  \\
+    $c = M^{e} \bmod n$ \\
+  $c = 2^{7} \bmod 527$ \\
+  $c = 128$ \\
+  \\
+    $M = c^{d} \bmod n$ \\
+  $M = 128^{343} \bmod 527$ \\
+  $M = 2$ \\
+  \\
+  
+
+
+\section{}
+\paragraph{a}
+
+  \textbf{Exponent:}\seqsplit{32215825364707142111746369647434989489121346671294459945899906301378010545034140722748858687993131196299707378405434893517768163853203903012726100597725865670354080615564129818380938061477366638205731466819690402699893697108290613805136214985701727288913729465854168575792116844114618027072064467069930653745751622510778376559269156157388946055102018361725149698863168324955660201607770127481691202088968910315082869426441192899271662808469652241355517723909135215154656264593225352408411761506211667572403659939634296076153685691581613857614641787909303289919825400818884721448750484703386165237151025611873637380573}
+  
+  \textbf{Modulus:} 65537
+  
+  \textbf{Certificate Data:} \begin{verbatim}Version:                  2 (X.509v3-1996)
+SubjectName:              CN=Matthew Ruffner [1549232259], DC=cryptool, DC=org
+IssuerName:               CN=CrypTool CA 2, DC=cryptool, DC=org
+SerialNumber:             B1:76:37:B9:99:9B:11:A4
+Validity  -  NotBefore:   Sun Feb 03 17:17:43 2019 (190203221743Z)
+              NotAfter:   Mon Feb 03 17:17:43 2020 (200203221743Z)
+Public Key Fingerprint:   1F3F 597D 2756 3DE5 DF87 B647 CA39 0FF7 
+SubjectKey:               Algorithm rsa (OID 2.5.8.1.1), Keysize = 2048
+              Public modulus (no. of bits = 2048):
+                0  FF32D087 A859DC5E  7E6785E5 A04C8C62
+               10  57CADA84 E76353D7  73CE7B26 3816AB42
+               20  F941DF94 9C74A790  9F1A33F6 E504A4C6
+               30  B53DB584 8D04C259  2CF6802C 516CF9D5
+               40  F39C8CBF 69962BC2  9F6B5C99 BF922BEF
+               50  DFED8E6C 08188E2F  6EA7CE71 3D039A97
+               60  57AC7E0A 3A63CA09  EF0A6BFE 61344DB3
+               70  1D3A8E7C ADBC6118  EAECD73E 5E77FBB4
+               80  054FCC63 816B5BCA  97B4DEB3 3DD00660
+               90  7F29CEA1 ED0C2A47  45475D9B 93961A2B
+               A0  58EDDB1C 23C365E5  D0124F6D A3196A87
+               B0  D5F78764 78794F94  B0923CF2 A7783572
+               C0  F685E684 E1FF90CC  9A0D6820 376CF8FD
+               D0  949D142F 95DB5C18  640FCA76 08EDD15B
+               E0  07047080 C798196F  8604BD53 BE09F884
+               F0  F7F3C384 519AB102  2C828D10 314C31DD
+              Public exponent  (no. of bits = 17):
+                0  010001                              
+Certificate extensions:
+Private extensions:
+    OID 2.206.5.4.3.2:                     
+        PrintableString:
+                |[Ruffner][Matthew][RSA-2048][154|
+                |9232259]                        |
+    
+SHA1 digest of DER code of ToBeSigned:
+                0  EC415B13 DB9C0523  BB345FC1 703E4CE1
+               10  EF7EA525                            
+Signature:                Algorithm sha1WithRSASignature (OID 1.3.14.3.2.29), NULL
+                0  9EFEAA3B 38B42284  02165211 A9C763AA
+               10  601E4B22 6C5C280C  D5AFEF8D D7F14D8B
+               20  2A458A6C A4FCF55A  9C3DC0AD 55D9D697
+               30  ED4FC828 6503CCEA  258193B9 435A49AD
+               40  8F1BB14F 384D0852  DE04D4F2 237B028F
+               50  9ECCD544 DE7E404C  8438B300 EC234681
+               60  70520C35 BC402B4D  EA818D00 84995273
+               70  CE3C9032 472ACE99  6EB6E5FB 5CB9468B
+               80  7475267C 5764FFAC  ACFFEF1E 48737D90
+               90  FE5DA073 9A7FB38E  1B2F6D0B 32AA3824
+               A0  585F3F1A EC29212F  8BD5F97C 252C021A
+               B0  FE635C05 37E6F7B9  8AE4B252 EC28CF17
+               C0  10D56E6C 85035BAC  8F43AACA C85EC0AB
+               D0  340DC3A2 F973064F  213A8CB1 D8E6A5FA
+               E0  3DB25BC4 48766D1A  5FC28365 A5D45F89
+               F0  D1743D7C 23DAA8BE  2050AD9C 7D9BAC7C
+Certificate Fingerprint (MD5):    C8:1D:8B:43:1A:04:D8:F4:9E:1B:EA:BD:40:EF:04:EC
+Certificate Fingerprint (SHA-1):  402F 16EB 1A51 F092 E606 8742 B20E C450 7482 3DB2
+\end{verbatim}
+
+\paragraph{b}
+  The text file was first opened, then MD5 was chosen as the hash function. The text file opened is the included \texttt{arbitrary.txt}. The MD5 hash of this file is \texttt{52 C6 56 62 DC FF FE 50 79 15 7C 9F B2 2D 9F C5}. Next, the RSA key was generated after first creating primes. The output of the encrypted hash value is: 
+  \begin{verbatim}
+      Padding string:         01 FF 00
+Algorithm ID:           30 20 30 0C 06 08 2A 86 48 86 F7 0D 02 05 05 00 04 10
+Hash value:             52 C6 56 62 DC FF FE 50 79 15 7C 9F B2 2D 9F C5
+
+ASN-1 hash value:       01 FF 00 30 20 30 0C 06 08 2A 86 48 86 F7 0D 02 05 05 00 04 10 52 C6
+56 62 DC FF FE 50 79 15 7C 9F B2 2D 9F C5
+Length in bits:         296
+
+Encrypted hash value:   18 D6 ED B6 A7 42 B4 96 AE 03 80 39 6B F1 C4 8F C1 32 75 8C A5 F4 B1 C6
+8C 97 06 6D 07 27 CD C0 F1 EA 7D 23 55 A6
+Length in bits:         304
+  \end{verbatim}
+
+Next the generated certificate was stored in the file \texttt{Cry-RSA-arbitrary.hex}
+
+\paragraph{c.} Now, the certificate is verified. This step involved opening the certificate signature file \texttt{Cry-RSA-arbitrary.hex} and selecting the verify option from the menu. Next, the correct key, generated in part a was selected as the key to use to verify against. Then, the message, 'verification successful was displayed. It makes sense that the verification step should be less intensive and quicker than the signature step.
+
+\section{}
+\paragraph{a}
+  This scheme does not provide the intended security because each hash of a particular phone number is unique, and can be identified by its hash. In this way, an attacker could query the BobCrypt server with hashes of made up phone numbers to see if it matches the database as easily as they could query the database with actual phone numbers.
+
+\paragraph{b} 
+
+  With this new hash function Bob has employed, the random number aspect of the hash will unfortunately ensure that it will be impossible to identify any users phone number upon querying the server.
+  
+  
+  
+\section{}
+
+\section{}
+
+
+table example
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|cc}
+    a & b & c \\
+    \hline
+    b & c & d
+\end{tabular}
+\caption{This is a caption.}
+\label{tab:table1}
+\end{table}
 
 \end{document}
