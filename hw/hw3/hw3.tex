@@ -31,6 +31,8 @@
   The SHA-1 hash of the string "University of Kentucky" is \texttt{7b35ac7c15a9d173ef3b100d32ea4ec4d822fd12}
 
 \paragraph{c.} 
+
+
   Assuming an average of 0.5 million files on a standard Linux machine (\texttt{find / | wc -l} yielded 455826 for me), the probability of a SHA-1 hash collision is very low (less than $10^{-20}$), as calculated with Eq. \ref{eq:sha1}, where n is the number of blocks (22 in this case), and b is the number of bits produced by the hash function (160 for SHA-1).
   \begin{equation}
       p \leq \frac{n(n-1)}{2} \times \frac{1}{2^b}
@@ -300,20 +302,94 @@ Next the generated certificate was stored in the file \texttt{Cry-RSA-arbitrary.
   
 \section{}
 
+  To solve this problem, we begin by finding an algorithm h'($\cdot$) that is collision resistant. If we use SHA-1 to get a hashed output h($\cdot$) in h'($\cdot$), we can be sure that h'($\cdot$) is collision resistant as long as h($\cdot$) is collision resistant. We know that SHA-1 is collision resistant so we will use that to create h'($\cdot$). To do this, we will concatenate some number of bits in front of h($\cdot$) to get a new output that we know is collision resistant.
+  \\
+  \\
+  Taking the above, we can now create a hashed function that is not puzzle friendly. This can be done simply by making the concatenated bits in front of h($\cdot$) be equivalent d number of zeroes.
+  \\
+  \\
+  Therefore, our final has function will be the following:
+  \\
+  \begin{equation}
+      h'(\cdot)=(d-leading-zeroes || h(\cdot))
+  \end{equation}
+      where h($\cdot$) is the hashed SHA-1 output. From this, we can know the following:
+  \\
+ 1. h'($\cdot$) outputs more bits for n' $>$ n. This is because we are concatenating the zeroes in front of the SHA-1 output to increase the bit size.
+ \\
+ 2. h'($\cdot$) is collision resistant. This is because h'($\cdot$) uses the collision resistant SHA-1 output h($\cdot$) in its algorithm. We can show this by using contradiction:
+ \\
+ \\
+ Let's assume that our hash function h'($\cdot$) is not collision resistant. That would mean that we would be able to easily find 2 inputs that would hash to the same output. However, since our hash function includes the SHA-1 hash, that would mean that SHA-1 would have to fail to be collision resistant. This creates a contradiction, therefore showing that h'($\cdot$) is collision resistant.
+ \\
+ \\
+ 3. We show that our hash function is not puzzle friendly because, depending on how many zeroes we need to be at the beginning, we just concatenate that many to get the desired result.
+ 
 \section{}
+\paragraph{a.}
+To show that the individual judges don't know, we first look at $s_{1}$. Let's assume that we get that $s_{1}=13$. We can determine two ways that this could be true based on how the vote went:
+\\
+1. The random number was 12 and the person voted yes.
+\\
+2. The random number was 13 and the person voted no.
+\\
+\\
+This is an example of two situations with different votes that obtained the same answer. This shows that our answers are no longer unique and with 101 people this becomes more complicated. 
+\\
+We next need to look at $s_{2}$ and we can approach this in a similar way. Let's assume the answer is 8. This could happen in the following ways:
+\\
+\\
+1. The random number was 55 and the person voted yes.
+\\
+2. The random number was 4 and the person voted no.
+\\
+\\
+This happens because when we multiply a number by 2 and take the $\bmod$ 103, this will force the number to be between 0 and 103 and we can see that the numbers also fail to be unique in this situation as well.
+\\
+\\
+Finally, we can show that the values are randomly distributed. To do this we can first assume that all the votes are no. This means we we are only considering the random number. For $s_{1}$ it is clear that the values are evenly distributed because all the values have an equal chance of showing up between 0 and 102.
+\\
+\\
+For $s_{2}$, we can show that this is also the case. Once again, assume that all the votes are no. The equation becomes $s_{2}=2r\bmod 103$ where r is the random number. For r between 0 and 51, the value of $s_{2}$ will be all the even numbers between 0 and 102. For r between 52 and 102 we will get all the odd numbers between 1 and 101. This shows that every number has an equal chance of appearing because it only appears once.
+\\
+\\
+Because the random number is uniformly distributed and we have removed uniqueness, there is no way that the election judge can be certain of what the vote was.
+\paragraph{b.}
+ To use this information and find the total vote we do the following:
+ \begin{equation}
+     2 \times t_{1}-t_{2}=\sum v(i)
+ \end{equation}
+ Proof:\\
+ We are given that $s_{1}=r(i)+v(i) \bmod 103$; and that $s_{2}=2 \times r(i) + v(i) \bmod 103$. We can set up a system of equations in the following way:
+ \\
+ \begin{equation}
+     s_{1}=r(i)+v(i) \bmod 103 \\
+     s_{2}=2 \times r(i) + v(i) \bmod 103
+ \end{equation}
+ Multiply the top equation by 2 and subtract the bottom equation from it to get the following:\\
+ \begin{equation}
+     2 \times s_{1} - s_{2} \bmod 103 = v(i)
+     \\
+  \end{equation}   
+     Note: we take the mod 103 on the left hand side to account for the mod in the original equations
+ 
+ We can then take the sum of both sides:
+ \\
+ \begin{equation}
+     \sum\limits_{i=1}^n 2 \times s_{1} - s_{2} \bmod 103 = \sum\limits_{i=1}^n v(i)
+     \end{equation}, where n = 101 
+     \begin{equation}
+     2 \times \sum\limits_{i=1}^n s_{1} \bmod 103 - \sum\limits_{i=1}^n s_{2} \bmod 103 = \sum\limits_{i=1}^n v(i)
+     \end{equation}
+\\
+Substituting the definitions for $t_{1}$ and $t_{2}$, we get the following:
+\begin{equation}
+    2 \times t_{1} - t_{2} = \sum\limits_{i=1}^n v(i)S
+\end{equation}
+\\
+This allows us to find the total vote with $t_{1}$ and $t_{2}$, which we know from part a are secret.
 
 
-table example
 
-\begin{table}[h!]
-\centering
-\begin{tabular}{c|cc}
-    a & b & c \\
-    \hline
-    b & c & d
-\end{tabular}
-\caption{This is a caption.}
-\label{tab:table1}
-\end{table}
 
 \end{document}
