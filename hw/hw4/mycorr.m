@@ -9,6 +9,17 @@ function C = mycorr(x,y)
   assert((xr==yr), 'Matrix row count mismatch');
 
   % -> Compute correlation coefficient between x and y <-
-
-  C=corrcoef(x,y);
+  % use matlab's built in function for calculating the correlation 
+  % coefficients of two matricies
+  
+  C=zeros(xr,yc);
+  
+  
+  % implemented from https://github.com/GaPhil/dpa/blob/master/mycorr.m
+  x = x - repmat(mean(x, 1), xr, 1);              % remove means
+  y = y - repmat(mean(y, 1), yr, 1);
+  C = x' * y;                                     % (n - 1)cov(x, y)
+  C = C ./ repmat((sqrt(sum(x.^2, 1)))', 1, yc);  % divide by sqrt((n - 1)var(x))
+  C = C ./ repmat(sqrt(sum(y.^2, 1)), xc, 1);     % divide by sqrt((n - 1)var(y))
+  
 end
