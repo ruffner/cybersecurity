@@ -14,6 +14,16 @@
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 
+\usepackage[numbered,framed]{matlab-prettifier}
+\let\ph\mlplaceholder % shorter macro
+\lstMakeShortInline"
+
+\lstset{
+  style              = Matlab-editor,
+  basicstyle         = \mlttfamily,
+  escapechar         = ",
+  mlshowsectionrules = true,
+}
 
 \title{EE576 HW 4}
 \author{Jordan Caudill and Matt Ruffner}
@@ -21,10 +31,70 @@
 \begin{document}
 \maketitle
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{}
+Their rational is not valid. Like the Stuxnet attach, the 'air gap' is able to be bridged by means of inserting a flash drive into the target computer. Even though the computer is not connected to the internet, any malicious actor within the known operating staff of the damn would be able to initiate a malicious attach. There is also the scenario of someone sneaking past security in order to initiate the attack. These are two reasons that the penalty incurred by shutting down the equipment for several hours is less than the possibility of malicious acting.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{}
+We begin by defining normal accidents as incidents that were due to unforeseeable circumstances. Based on this definition we can analyze the following situations: 
+\\
+\\
+a. The Stuxnet attack is not an example of a normal accident. This is because is was an intentional, malicious attack designed to cause as much damage as possible. It was caused by a usb stick containing the virus being placed in a target computer through either infiltration or social engineering. This resulted in significant damage to Iran's nuclear program. The way to prevent this would be to have more security or training of personal. Because it was a malicious attack that could have been predicated and avoided it is not a normal accident.
+\\
+\\
+b. The ruptured pipeline in Bellingham, Washington is an example of a normal accident. The accident was caused due to a faulty computer SCADA system and faulty pressure valve. Because the failure was due to faulty equipment and not a malicious attack, it could not have been predicted. This is why it is an example of a normal accident.
+\\
+\\
+c. The hijacked trams in Lodz, Poland was not a normal accident. This is because it was caused by a teen who used an electric remote to change the railway connections causing multiple injuries. He was able to do this because he trespassed into the train depots to gather information he needed. This could have been avoided with better security and a more secure system. Because of that, it is not a normal accident.
+\\
+\\
+d. The 2011 failure at the Illinois water plant is not an example of a normal accident. While it was initially considered to be caused by Russian hackers, it was later revealed to be cause by a faulty pump. The confusion was caused when a contractor with remote access to the pump signed on while he was on vacation in Russia. The pump had been experiencing problems for a while so it should have been changed. Because they had experienced problems before, they should have known that it would fail eventually. Because they could have predicted it, it is not a normal accident. 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{}
+The appeal to attacking smart meters lies in the fact that it is possible to obtain private information about the household with which they are attach. This is done by monitoring the "energy consumption traces"~\cite{RajagopalanS.R2011SmpA}. By using frequent meter readings combined with data mining algorithms, it is possible to obtain private information about the occupant of the home~\cite{RajagopalanS.R2011SmpA}. The information that can be obtained include: number of occupants, life-style and economic status, and with fine enough measurements they could even monitor which channel on television is being watched. Because the smart meter is designed to be used in real time with the smart grid, all this information would be available to an attacker in real time. 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{}
 
+\paragraph{a.}
+What is DPA?
+
+\paragraph{b.}
+Code from \texttt{measurement.m} is shown in Listing \ref{meas} and code from \texttt{mycorr.m} is shown in Listing \ref{mycorr}.
+
+\lstinputlisting[language=Matlab,caption={\texttt{mycorr.m} code},label={mycorr}]{mycorr.m}
+
+\lstinputlisting[language=Matlab,caption={\texttt{measurement.m} code},label={meas}]{measurement.m}
 
 
-\section{}
+
+
+\paragraph{c.}
+Plots of matching samples and keys.
+
+\paragraph{d.}
+challenges encountered in this exercise.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{ieeetr}
+\bibliography{refs.bib}
 
 \end{document}
