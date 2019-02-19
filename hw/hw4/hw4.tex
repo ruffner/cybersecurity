@@ -72,7 +72,20 @@ The appeal to attacking smart meters lies in the fact that it is possible to obt
 \section{}
 
 \paragraph{a.}
-What is DPA?
+
+DPA or Differential Power Analysis is the act of measuring the different voltage or current that happens during the encryption process to try to obtain the hidden key. This is done in the following steps:
+\begin{enumerate}
+    \item Find an intermediate value of $v_{i,k}=f(d_{i},k)$. This means that you take a value to be encrypted and run it through the encryption hardware, where $v_{i,k}$ is the voltage, $d_{i}$ is the data point and k is the key.
+    
+    \item  Measure the power traces at $t_{i,k}$ while encrypting $d_{i}$. This means to measure a particular power trace at a given time while encrypting the data.
+    
+    \item  Build a matrix of all the hypothetical intermediate values inside the cipher for all possible keys and $v_{i,k}$ traces. This means building a matrix that could contains all the possible voltage values from step 1 in the columns and have it with all the possible keys in the rows.
+    
+    \item Build a matrix of all the hypothetical power consumption values and all possible keys. This means building a matrix with what we predict the power to be in the columns ($h_{i,k}$) with the possible keys in the rows.
+    
+    \item Statistically evaluate which key hypothesis best matches the measured power at each individual time. This is done by using the correlation function with the matrices from steps 3 and 4 and find the max value of the new matrix. This has the highest chance of being the key.
+\end{enumerate}
+
 
 \paragraph{b.}
 Code from \texttt{measurement.m} is shown in Listing \ref{meas} and code from \texttt{mycorr.m} is shown in Listing \ref{mycorr}.
@@ -83,12 +96,43 @@ Code from \texttt{measurement.m} is shown in Listing \ref{meas} and code from \t
 
 
 
-
+\newpage
 \paragraph{c.}
-Plots of matching samples and keys.
+
+The unknown key was determined to be:
+
+\vspace{1cm}
+\textbf{\texttt{
+0x05 
+0xDE 
+0xAD 
+0xBE 
+0xEF
+0x42
+0x00
+0x68
+0x61
+0x63
+0x6B
+0x65
+0x64
+0x6B
+0x65
+0x79}}\\
+\vspace{1cm}\\
+The plot in Fig. \ref{fig:traceIndex} shows the points along the mean of the power traces where the correct key was located during the examination of the correlation matrix. As you can see, the correct keys were found relatively early on within the entire power monitoring trace, indicating that less samples could have sufficed in order to still successfully glean the 16 byte key from the trace.
+
+In Fig. \ref{fig:traceIndex}, you can see the low portions within the raised portion of the signal. These represent the 10 rounds of encryption. The estimates yeilded by the correlation power analysis (differential power analysis) are accurate enough to extract the key without power trace data on all rounds of AES encryption.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=10cm]{keyIndexPlot.png}
+\caption{Plot showing the trace indices corresponding to the correct key}
+\label{fig:traceIndex}
+\end{figure}
 
 \paragraph{d.}
-challenges encountered in this exercise.
+It was interesting how little of the entire collected traces was actually needed to successfully determine the key. One challenge faced was calculating the bitwise hamming distance in MATLAB. In looking at other implementations of this code, specifically Phillip's~\cite{gaphil}, we have implemented a much faster search of the correlation matrix in order to find the correct corresponding key and time within the trace using the line \texttt{[K,T]=find(CC==max(max(CC)));} instead of manually iterating.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
