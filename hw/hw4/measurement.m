@@ -1,5 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Matlab key recovery exercise template %
+%% Matlab key recovery exercise template %
 %                                       %
 % 2014, Filip Stepanek and Jiri Bucek   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,22 +25,25 @@ SBOX=[099 124 119 123 242 107 111 197 048 001 103 043 254 215 171 118 ...
 %% LOADING the DATA 
 %%%%%%%%%%%%%%%%%%%%
 
-% modify following variables so they correspond 
-% your measurement setup
-numberOfTraces = 200;
-traceSize = 370000;
+% for unknown key
+numberOfTraces = 150;
+traceSize = 550000;
+
+% for known key
+%numberOfTraces = 200
+%traceSize = 370000
 
 % modify the following variables to speed-up the measurement
 % (this can be done later after analysing the power trace)
 offset = 0;
-segmentLength = 370000; % for the beginning the segmentLength = traceSize
+segmentLength = 48000; % for the beginning the segmentLength = traceSize
                     
 % columns and rows variables are used as inputs 
 % to the function loading the plaintext/ciphertext
 columns = 16;
 rows = numberOfTraces;
 
-%% Calling the functions %
+%% Calling the functions
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 % function myload processes the binary file containing the measured traces and
@@ -58,7 +60,7 @@ rows = numberOfTraces;
 % modify the offset and segmentLength inputs so the loaded parts of the
 % traces correspond to the trace segment you are using for the recovery.
 %traces = myload('traces-00112233445566778899aabbccddeeff.bin', traceSize, offset, segmentLength, numberOfTraces);
-traces = myload('dpa/knownKey/traces-200x370000.bin', traceSize, offset, segmentLength, numberOfTraces);
+traces = myload('dpa/unknownKey/traces-150x550000.bin', traceSize, offset, segmentLength, numberOfTraces);
 
 % function myin is used to load the plaintext and ciphertext 
 % to the corresponding matrices. 
@@ -66,17 +68,17 @@ traces = myload('dpa/knownKey/traces-200x370000.bin', traceSize, offset, segment
 %   'file' - name of the file containing the plaintext or ciphertext
 %   columns - number of columns (e.g., size of the AES data block)
 %   rows - number of rows (e.g., number of measurements)
-plaintext = myin('dpa/knownKey/plaintext.txt', columns, rows);
-ciphertext = myin('dpa/knownKey/ciphertext.txt', columns, rows);
+plaintext = myin('dpa/unknownKey/plaintext.txt', columns, rows);
+ciphertext = myin('dpa/unknownKey/ciphertext.txt', columns, rows);
+%plaintext = myin('dpa/knownKey/plaintext.txt', columns, rows);
+%ciphertext = myin('dpa/knownKey/ciphertext.txt', columns, rows);
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% EXERCISE 1 -- Plotting the power trace(s): %
+%% EXERCISE 1 -- Plotting the power trace(s): %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Plot one trace (or plot the mean value of traces) and check that it is complete 
 % and then select the appropriate part of the traces (e.g., containing the first round).
 
-% idea for plot smoothing taken from https://github.com/GaPhil/dpa/blob/master/analysis.m#L55
-firstround = 75000;
+% plot smoothing taken from https://github.com/GaPhil/dpa/blob/master/analysis.m#L55
 figure(1);
 plot(smooth(mean(traces), 100));                          % plot mean of all traces
 xlabel("Sample number");
@@ -95,7 +97,7 @@ title("Full trace");
 
 % variables declaration
 byteStart = 1;
-byteEnd = 16; % shoudl be 16
+byteEnd = 16;
 keyCandidateStart = 0;
 keyCandidateStop = 255;
 
@@ -123,6 +125,7 @@ for BYTE=byteStart:byteEnd
     CC = mycorr(powerHypothesis, traces);
     
     % find the max correlation indicating correct byte
+    % much faster than iterating through with loops like GaPhil does
     [K,T]=find(CC==max(max(CC)));
     
     % save in result and print
@@ -134,6 +137,6 @@ end;
 
 
 figure(2);
-tax=1:370000;
+tax=1:segmentLength;
 vals=smooth(mean(traces),100);
 plot(tax,vals,tax(resultIdx),vals(resultIdx),'+');  
