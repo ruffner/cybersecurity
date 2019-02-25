@@ -35,12 +35,134 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{}
+The two things that are different about IoT blockchains and bitcoin blockchains are:
+
+\begin{enumerate}
+    \item The IoT blockchain requires a smart contract to work properly.
+    \item The IoT blockchain may require a DNS service to work properly. 
+\end{enumerate}
 
 
 
+\section{}
 
+\subsection{}
+Explain how the private key and address are used in Bitcoin. How do you know that this is an address for the Testnet blockchain but not the production Bitcoin blockchain?
 
+\subsection{}
+Write down the transaction hash and the faucet address as you will need it for the next step. How much bitcoin did you get and what was the tx fee?
 
+\subsection{}
+output of split script:
+\begin{verbatim}
+    201 Created
+{
+  "tx": {
+    "block_height": -1,
+    "block_index": -1,
+    "hash": "3cf4fd235c3d5d6d02e6431c19acae21a578a322a704a9f4a1f85c85e399b40f",
+    "addresses": [
+      "n3qmL3GcTF9rvbf6kqpuzLYQZCjrTSqaGk"
+    ],
+    "total": 50048336,
+    "fees": 100000,
+    "size": 430,
+    "preference": "high",
+    "relayed_by": "128.163.237.198",
+    "received": "2019-02-25T01:30:55.793951859Z",
+    "ver": 1,
+    "double_spend": false,
+    "vin_sz": 1,
+    "vout_sz": 8,
+    "confirmations": 0,
+    "inputs": [
+      {
+        "prev_hash": "65e262e41987ed7652847afeb56ff975060abe9a89cf53330c6664a045dbedd9",
+        "output_index": 1,
+        "script": "483045022100e9817716cc0051e7acd6b2280c64c5410a542727e99f862028afcba19488aece02200ae7ae7ed1649455255182f9c53d440f6c954351908556cee9a980ff3e267c190121028bb1604765225d96539f6c0eccdc8ebed4f955e7951585f0101a27d9ccba8a80",
+        "output_value": 50148336,
+        "sequence": 4294967295,
+        "addresses": [
+          "n3qmL3GcTF9rvbf6kqpuzLYQZCjrTSqaGk"
+        ],
+        "script_type": "pay-to-pubkey-hash",
+        "age": 1481390
+      }
+    ],
+    "outputs": [
+      {
+        "value": 6256042,
+        "script": "76a914f4e1844a7d5b631fa93d07861061029e0381ee6588ac",
+        "addresses": [
+          "n3qmL3GcTF9rvbf6kqpuzLYQZCjrTSqaGk"
+        ],
+        "script_type": "pay-to-pubkey-hash"
+      },
+      {
+        "value": 6256042,
+        "script": "76a914f4e1844a7d5b631fa93d07861061029e0381ee6588ac",
+        "addresses": [
+          "n3qmL3GcTF9rvbf6kqpuzLYQZCjrTSqaGk"
+        ],
+        "script_type": "pay-to-pubkey-hash"
+      },
+      {
+        "value": 6256042,
+        "script": "76a914f4e1844a7d5b631fa93d07861061029e0381ee6588ac",
+        "addresses": [
+          "n3qmL3GcTF9rvbf6kqpuzLYQZCjrTSqaGk"
+        ],
+        "script_type": "pay-to-pubkey-hash"
+      },
+      {
+        "value": 6256042,
+        "script": "76a914f4e1844a7d5b631fa93d07861061029e0381ee6588ac",
+        "addresses": [
+          "n3qmL3GcTF9rvbf6kqpuzLYQZCjrTSqaGk"
+        ],
+        "script_type": "pay-to-pubkey-hash"
+      },
+      {
+        "value": 6256042,
+        "script": "76a914f4e1844a7d5b631fa93d07861061029e0381ee6588ac",
+        "addresses": [
+          "n3qmL3GcTF9rvbf6kqpuzLYQZCjrTSqaGk"
+        ],
+        "script_type": "pay-to-pubkey-hash"
+      },
+      {
+        "value": 6256042,
+        "script": "76a914f4e1844a7d5b631fa93d07861061029e0381ee6588ac",
+        "addresses": [
+          "n3qmL3GcTF9rvbf6kqpuzLYQZCjrTSqaGk"
+        ],
+        "script_type": "pay-to-pubkey-hash"
+      },
+      {
+        "value": 6256042,
+        "script": "76a914f4e1844a7d5b631fa93d07861061029e0381ee6588ac",
+        "addresses": [
+          "n3qmL3GcTF9rvbf6kqpuzLYQZCjrTSqaGk"
+        ],
+        "script_type": "pay-to-pubkey-hash"
+      },
+      {
+        "value": 6256042,
+        "script": "76a914f4e1844a7d5b631fa93d07861061029e0381ee6588ac",
+        "addresses": [
+          "n3qmL3GcTF9rvbf6kqpuzLYQZCjrTSqaGk"
+        ],
+        "script_type": "pay-to-pubkey-hash"
+      }
+    ]
+  }
+}
+\end{verbatim}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{splitProof}
+\end{figure}
 
 
 
